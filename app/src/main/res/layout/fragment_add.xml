@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FragmentEdit">
+    tools:context=".fragments.FragmentAdd">
 
     <ImageView
-        android:id="@+id/editImage"
+        android:id="@+id/addImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="24dp"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editBrand"
+        android:id="@+id/addBrand"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="16dp"
@@ -27,39 +27,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editImage" />
+        app:layout_constraintTop_toBottomOf="@+id/addImage" />
 
     <EditText
-        android:id="@+id/editModel"
+        android:id="@+id/addModel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Model"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/editBrand"
-        app:layout_constraintStart_toStartOf="@+id/editBrand"
-        app:layout_constraintTop_toBottomOf="@+id/editBrand" />
+        app:layout_constraintEnd_toEndOf="@+id/addBrand"
+        app:layout_constraintStart_toStartOf="@+id/addBrand"
+        app:layout_constraintTop_toBottomOf="@+id/addBrand" />
 
     <EditText
-        android:id="@+id/editYear"
+        android:id="@+id/addYear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Release date"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="@+id/editModel"
-        app:layout_constraintStart_toStartOf="@+id/editModel"
-        app:layout_constraintTop_toBottomOf="@+id/editModel" />
+        app:layout_constraintEnd_toEndOf="@+id/addModel"
+        app:layout_constraintStart_toStartOf="@+id/addModel"
+        app:layout_constraintTop_toBottomOf="@+id/addModel" />
 
     <Button
-        android:id="@+id/btnSave"
+        android:id="@+id/addBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="Add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editYear"
+        app:layout_constraintTop_toBottomOf="@+id/addYear"
         app:layout_constraintVertical_bias="0.2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

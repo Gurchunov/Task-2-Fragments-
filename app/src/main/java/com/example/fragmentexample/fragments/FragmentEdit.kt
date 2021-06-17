@@ -12,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import com.example.fragmentexample.R
 import com.example.fragmentexample.`interface`.IFragment
-import com.example.fragmentexample.data.PhoneItem
+import com.example.fragmentexample.data.CarItem
 import com.example.fragmentexample.databinding.FragmentEditBinding
 import com.example.fragmentexample.helpers.UriToDrawable
-import com.example.fragmentexample.viewmodel.PhoneListViewModel
+import com.example.fragmentexample.viewmodel.CarViewModel
 
 
 class FragmentEdit(private val navigation: IFragment) : Fragment(R.layout.fragment_edit) {
@@ -26,9 +26,9 @@ class FragmentEdit(private val navigation: IFragment) : Fragment(R.layout.fragme
     private val selImgCode = 1
 
 
-    private val phoneListViewModel: PhoneListViewModel by activityViewModels()
+    private val carViewModel: CarViewModel by activityViewModels()
     private var setItemId: Int = 0
-    private var selectedItem: PhoneItem = PhoneItem(null, null, null, null)
+    private var selectedItem: CarItem = CarItem(null, null, null, null)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,21 +41,20 @@ class FragmentEdit(private val navigation: IFragment) : Fragment(R.layout.fragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setItemId = phoneListViewModel.selectedIndex.value!!
-        selectedItem = phoneListViewModel.getPhonesPosition(setItemId)
+        setItemId = carViewModel.selectedIndex.value!!
+        selectedItem = carViewModel.getPhonesPosition(setItemId)
 
         with(binding) {
-            editBrand.setText(phoneListViewModel.getPhonesPosition(setItemId).brand)
-            editModel.setText(phoneListViewModel.getPhonesPosition(setItemId).model)
-            editYear.setText(phoneListViewModel.getPhonesPosition(setItemId).year)
-            editImage.setImageDrawable(phoneListViewModel.getPhonesPosition(setItemId).img)
+            editBrand.setText(carViewModel.getPhonesPosition(setItemId).brand)
+            editModel.setText(carViewModel.getPhonesPosition(setItemId).model)
+            editYear.setText(carViewModel.getPhonesPosition(setItemId).year)
+            editImage.setImageDrawable(carViewModel.getPhonesPosition(setItemId).img)
 
-            binding.btnSave.setOnClickListener {
+            btnSave.setOnClickListener {
                 selectedItem.brand = editBrand.text.toString()
                 selectedItem.model = editModel.text.toString()
                 selectedItem.year = editYear.text.toString()
 
-//                phoneListViewModel.updatePhonePosition(se)
                 navigation.listPhones()
             }
             editImage.setOnClickListener {

@@ -3,12 +3,12 @@ package com.example.fragmentexample.helpers
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.example.fragmentexample.R
-import com.example.fragmentexample.data.PhoneItem
+import com.example.fragmentexample.data.CarItem
 
 object InitHelper {
-    fun initDevicesList(context: Context): MutableList<PhoneItem> {
+    fun initDevicesList(context: Context): MutableList<CarItem> {
         return mutableListOf(
-            PhoneItem(
+            CarItem(
                 "Samsung",
                 "A50",
                 "Android",

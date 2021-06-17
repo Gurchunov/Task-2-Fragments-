@@ -1,47 +1,64 @@
 package com.example.fragmentexample
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.ListFragment
+import androidx.navigation.findNavController
 import com.example.fragmentexample.`interface`.IFragment
-import com.example.fragmentexample.data.PhoneItem
+import com.example.fragmentexample.adapter.CarAdaptor
+import com.example.fragmentexample.data.CarItem
 import com.example.fragmentexample.databinding.ActivityMainBinding
+import com.example.fragmentexample.fragments.FragmentAdd
 import com.example.fragmentexample.fragments.FragmentEdit
 import com.example.fragmentexample.fragments.FragmentList
-import com.example.fragmentexample.helpers.InitHelper
-import com.example.fragmentexample.viewmodel.PhoneListViewModel
+import com.example.fragmentexample.fragments.FragmentListDirections
+import com.example.fragmentexample.helpers.InitHelper.initDevicesList
+import com.example.fragmentexample.viewmodel.CarViewModel
+import java.io.FileNotFoundException
 
 class MainActivity : AppCompatActivity(), IFragment {
-
+    private val ADD_CAR_CODE = 1
+    private lateinit var carAdapter: CarAdaptor
     private lateinit var binding: ActivityMainBinding
+
     private lateinit var fFragmentList: FragmentList
     private lateinit var fFragmentEdit: FragmentEdit
+    private lateinit var fFragmentAdd: FragmentAdd
 
-    private  val phonesListViewModel: PhoneListViewModel by viewModels()
+    private var carsList = mutableListOf<CarItem>()
+    private val phonesListViewModel: CarViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        // если черз нав граф инициальзировать не надо в активити
+        // если manager то надо
         binding = ActivityMainBinding.inflate(layoutInflater)
         fFragmentList = FragmentList(this)
         fFragmentEdit = FragmentEdit(this)
+        fFragmentAdd = FragmentAdd(this)
 
+        carsList = initDevicesList(this)
 
 
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        phonesListViewModel.loadPhones(InitHelper.initDevicesList(this))
+        phonesListViewModel.loadPhones(initDevicesList(this))
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.mList -> setCurrentFragment(fFragmentList)
                 R.id.mEdit -> setCurrentFragment(fFragmentEdit)
-                R.id.mAdd -> Toast.makeText(
+                R.id.mAdd -> setCurrentFragment(fFragmentAdd)
+                R.id.mTrack -> Toast.makeText(
                     this,
-                    "Hello",
+                    "Track",
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -52,7 +69,7 @@ class MainActivity : AppCompatActivity(), IFragment {
 
     private fun setCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fFragment, fragment)
+            replace(R.id.fragmentList, fragment)
             commit()
         }
     }
@@ -73,8 +90,27 @@ class MainActivity : AppCompatActivity(), IFragment {
         setCurrentFragment(fFragmentList)
     }
 
-    override fun onPhoneCreated(phone: PhoneItem?) {
+    override fun onPhoneCreated(car: CarItem?) {
         TODO("Not yet implemented")
     }
+
+    private fun uriToDrawable(imageUri: String): Drawable {
+        var image = AppCompatResources.getDrawable(this, R.drawable.phone)!!
+        try {
+            val inputStream = contentResolver.openInputStream(Uri.parse(imageUri))
+            image = Drawable.createFromStream(inputStream, imageUri)
+        } catch (e: FileNotFoundException) {
+            Log.e("MainActivity", "Unable to parse image from URI: $imageUri")
+        }
+        return image
+    }
+
+    override fun onClick(view: View) {
+        val action =
+            FragmentListDirections
+                .actionFragmentListToFragmentAdd2()
+        view.findNavController().navigate(action)
+    }
+
 
 }

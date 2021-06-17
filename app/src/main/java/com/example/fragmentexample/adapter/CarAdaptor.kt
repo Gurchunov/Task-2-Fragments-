@@ -4,21 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fragmentexample.`interface`.IFragment
-import com.example.fragmentexample.data.PhoneItem
+import com.example.fragmentexample.data.CarItem
 import com.example.fragmentexample.databinding.ItemPhoneBinding
 
-class PhoneListAdaptor(
-    private var phoneList: List<PhoneItem>, private val navigation: IFragment)
-    : RecyclerView.Adapter<PhoneListAdaptor.PhonesViewHolder>() {
+class CarAdaptor(
+    private var carList: List<CarItem>, private val navigation: IFragment)
+    : RecyclerView.Adapter<CarAdaptor.PhonesViewHolder>() {
 
     inner class PhonesViewHolder(private val itemPhoneBinding: ItemPhoneBinding)
         : RecyclerView.ViewHolder(itemPhoneBinding.root) {
 
-        fun bind(phoneItem: PhoneItem) {
-            itemPhoneBinding.itemBrand.text = phoneItem.brand
-            itemPhoneBinding.itemModel.text = phoneItem.model
-            itemPhoneBinding.itemYear.text = phoneItem.year
-            itemPhoneBinding.itemImage.setImageDrawable(phoneItem.img)
+        fun bind(carItem: CarItem) {
+            itemPhoneBinding.itemBrand.text = carItem.brand
+            itemPhoneBinding.itemModel.text = carItem.model
+            itemPhoneBinding.itemYear.text = carItem.year
+            itemPhoneBinding.itemImage.setImageDrawable(carItem.img)
         }
     }
 
@@ -29,11 +29,11 @@ class PhoneListAdaptor(
     }
 
     override fun getItemCount(): Int {
-        return phoneList.size
+        return carList.size
     }
 
     override fun onBindViewHolder(holder: PhonesViewHolder, position: Int) {
-        holder.bind(phoneList[position])
+        holder.bind(carList[position])
         holder.itemView.setOnClickListener{
         navigation.updatePhone(position)
         }

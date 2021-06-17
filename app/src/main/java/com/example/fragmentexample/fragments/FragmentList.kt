@@ -9,23 +9,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fragmentexample.adapter.PhoneListAdaptor
+import com.example.fragmentexample.adapter.CarAdaptor
 import com.example.fragmentexample.R
 import com.example.fragmentexample.`interface`.IFragment
-import com.example.fragmentexample.data.PhoneItem
+import com.example.fragmentexample.data.CarItem
 import com.example.fragmentexample.databinding.FragmentListBinding
-import com.example.fragmentexample.helpers.InitHelper
-import com.example.fragmentexample.viewmodel.PhoneListViewModel
+import com.example.fragmentexample.viewmodel.CarViewModel
 
 
 class FragmentList(val navigation: IFragment) : Fragment(R.layout.fragment_list) {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var phoneListAdaptor: PhoneListAdaptor
+    private lateinit var carAdaptor: CarAdaptor
     private lateinit var fcontext: Context
 
-    private val phoneListViewModel: PhoneListViewModel by activityViewModels()
+    private val carViewModel: CarViewModel by activityViewModels()
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -40,20 +41,22 @@ class FragmentList(val navigation: IFragment) : Fragment(R.layout.fragment_list)
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val phoneList = mutableListOf<PhoneItem>()
+        val phoneList = mutableListOf<CarItem>()
 
-        phoneListAdaptor = PhoneListAdaptor(phoneListViewModel.phoneListLiveData.value!!, navigation)
+        carAdaptor = CarAdaptor(carViewModel.phoneListLiveData.value!!, navigation)
 
-        binding.rvPhoneList.adapter = phoneListAdaptor
+        binding.rvPhoneList.adapter = carAdaptor
         binding.rvPhoneList.layoutManager = LinearLayoutManager(fcontext)
 
-        phoneListViewModel.phoneListLiveData.observe(
-            viewLifecycleOwner, Observer<MutableList<PhoneItem>>{
-                phoneListAdaptor.notifyDataSetChanged()
+        carViewModel.phoneListLiveData.observe(
+            viewLifecycleOwner, Observer<MutableList<CarItem>>{
+                carAdaptor.notifyDataSetChanged()
             }
         )
     }
@@ -62,5 +65,6 @@ class FragmentList(val navigation: IFragment) : Fragment(R.layout.fragment_list)
         super.onDestroy()
         _binding = null
     }
+
 
 }
