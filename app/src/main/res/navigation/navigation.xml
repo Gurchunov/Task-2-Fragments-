@@ -25,6 +25,7 @@
             android:id="@+id/action_fragmentList_to_fragmentEdit2"
             app:destination="@id/fragmentEdit" />
     </fragment>
+
     <fragment
         android:id="@+id/fragmentAdd"
         android:name="com.example.fragmentexample.fragments.FragmentAdd"

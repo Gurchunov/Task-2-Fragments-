@@ -4,28 +4,24 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import com.example.fragmentexample.`interface`.IFragment
-import com.example.fragmentexample.adapter.CarAdaptor
 import com.example.fragmentexample.data.CarItem
 import com.example.fragmentexample.databinding.ActivityMainBinding
 import com.example.fragmentexample.fragments.FragmentAdd
 import com.example.fragmentexample.fragments.FragmentEdit
 import com.example.fragmentexample.fragments.FragmentList
-import com.example.fragmentexample.fragments.FragmentListDirections
 import com.example.fragmentexample.helpers.InitHelper.initDevicesList
 import com.example.fragmentexample.viewmodel.CarViewModel
 import java.io.FileNotFoundException
 
 class MainActivity : AppCompatActivity(), IFragment {
     private val ADD_CAR_CODE = 1
-    private lateinit var carAdapter: CarAdaptor
+
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var fFragmentList: FragmentList
@@ -36,9 +32,9 @@ class MainActivity : AppCompatActivity(), IFragment {
     private val phonesListViewModel: CarViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // если черз нав граф инициальзировать не надо в активити
-        // если manager то надо
+
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         fFragmentList = FragmentList(this)
         fFragmentEdit = FragmentEdit(this)
         fFragmentAdd = FragmentAdd(this)
@@ -74,43 +70,43 @@ class MainActivity : AppCompatActivity(), IFragment {
         }
     }
 
-    override fun cretePhone() {
+    override fun creteCar() {
         binding.bottomNavigationView.selectedItemId = R.id.mAdd
-//        setCurrentFragment()
+//        setCurrentFragment(fFragmentAdd)
     }
 
-    override fun updatePhone(index: Int) {
+    override fun updateCar(index: Int) {
         phonesListViewModel.selectItem(index)
         binding.bottomNavigationView.selectedItemId = R.id.mEdit
         setCurrentFragment(fFragmentEdit)
     }
 
-    override fun listPhones() {
+    override fun listCar() {
         binding.bottomNavigationView.selectedItemId = R.id.mEdit
         setCurrentFragment(fFragmentList)
     }
 
-    override fun onPhoneCreated(car: CarItem?) {
+    override fun onCarCreated(car: CarItem?) {
         TODO("Not yet implemented")
     }
 
-    private fun uriToDrawable(imageUri: String): Drawable {
-        var image = AppCompatResources.getDrawable(this, R.drawable.phone)!!
-        try {
-            val inputStream = contentResolver.openInputStream(Uri.parse(imageUri))
-            image = Drawable.createFromStream(inputStream, imageUri)
-        } catch (e: FileNotFoundException) {
-            Log.e("MainActivity", "Unable to parse image from URI: $imageUri")
-        }
-        return image
-    }
+//    private fun uriToDrawable(imageUri: String): Drawable {
+//        var image = AppCompatResources.getDrawable(this, R.drawable.phone)!!
+//        try {
+//            val inputStream = contentResolver.openInputStream(Uri.parse(imageUri))
+//            image = Drawable.createFromStream(inputStream, imageUri)
+//        } catch (e: FileNotFoundException) {
+//            Log.e("MainActivity", "Unable to parse image from URI: $imageUri")
+//        }
+//        return image
+//    }
 
-    override fun onClick(view: View) {
-        val action =
-            FragmentListDirections
-                .actionFragmentListToFragmentAdd2()
-        view.findNavController().navigate(action)
-    }
+//    override fun onClick(view: View) {
+//        val action =
+//            FragmentListDirections
+//                .actionFragmentListToFragmentAdd2()
+//        view.findNavController().navigate(action)
+//    }
 
 
 }

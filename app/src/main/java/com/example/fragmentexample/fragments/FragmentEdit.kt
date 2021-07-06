@@ -31,7 +31,8 @@ class FragmentEdit(private val navigation: IFragment) : Fragment(R.layout.fragme
     private var selectedItem: CarItem = CarItem(null, null, null, null)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditBinding.inflate(inflater, container, false)
@@ -55,7 +56,7 @@ class FragmentEdit(private val navigation: IFragment) : Fragment(R.layout.fragme
                 selectedItem.model = editModel.text.toString()
                 selectedItem.year = editYear.text.toString()
 
-                navigation.listPhones()
+                navigation.listCar()
             }
             editImage.setOnClickListener {
                 val intent = Intent(Intent.ACTION_PICK)

@@ -35,7 +35,7 @@ class CarAdaptor(
     override fun onBindViewHolder(holder: PhonesViewHolder, position: Int) {
         holder.bind(carList[position])
         holder.itemView.setOnClickListener{
-        navigation.updatePhone(position)
+        navigation.updateCar(position)
         }
 
     }

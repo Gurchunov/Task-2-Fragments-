@@ -1,11 +1,16 @@
 package com.example.fragmentexample.fragments
 
+import android.content.ContentResolver
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +20,7 @@ import com.example.fragmentexample.`interface`.IFragment
 import com.example.fragmentexample.data.CarItem
 import com.example.fragmentexample.databinding.FragmentListBinding
 import com.example.fragmentexample.viewmodel.CarViewModel
+import java.io.FileNotFoundException
 
 
 class FragmentList(val navigation: IFragment) : Fragment(R.layout.fragment_list) {
@@ -26,14 +32,27 @@ class FragmentList(val navigation: IFragment) : Fragment(R.layout.fragment_list)
 
     private val carViewModel: CarViewModel by activityViewModels()
 
-
+    var itemsList = mutableListOf<CarItem>()
+    lateinit var adapter: CarAdaptor
+    private lateinit var fContext: Context
+    private lateinit var fContentResolver: ContentResolver
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        this.fcontext = context
+        this.fContext = context
+        this.fContentResolver = fContext.contentResolver
 
     }
-
+    private fun uriToDrawable(imageUri: String): Drawable {
+        var image = AppCompatResources.getDrawable(fcontext, R.drawable.phone)!!
+        try {
+            val inputStream = fContentResolver.openInputStream(Uri.parse(imageUri))
+            image = Drawable.createFromStream(inputStream, imageUri)
+        } catch (e: FileNotFoundException) {
+            Log.e("MainActivity", "Unable to parse image from URI: $imageUri")
+        }
+        return image
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +63,7 @@ class FragmentList(val navigation: IFragment) : Fragment(R.layout.fragment_list)
 
 
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,12 +79,12 @@ class FragmentList(val navigation: IFragment) : Fragment(R.layout.fragment_list)
                 carAdaptor.notifyDataSetChanged()
             }
         )
+
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
-
 }
