@@ -14,7 +14,7 @@
         android:id="@+id/fragmentList"
         android:name="com.example.fragmentexample.fragments.FragmentList"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" >
+        tools:layout="@layout/fragment_list">
         <action
             android:id="@+id/action_fragmentList_to_fragmentAdd2"
             app:destination="@id/fragmentAdd" />
@@ -30,7 +30,11 @@
         android:id="@+id/fragmentAdd"
         android:name="com.example.fragmentexample.fragments.FragmentAdd"
         android:label="fragment_add"
-        tools:layout="@layout/fragment_add" />
+        tools:layout="@layout/fragment_add" >
+        <action
+            android:id="@+id/action_fragmentAdd_to_fragmentList2"
+            app:destination="@id/fragmentList" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentTrack2"
         android:name="com.example.fragmentexample.FragmentTrack"

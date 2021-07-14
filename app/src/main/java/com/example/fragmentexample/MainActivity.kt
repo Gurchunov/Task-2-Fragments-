@@ -1,14 +1,13 @@
 package com.example.fragmentexample
 
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.example.fragmentexample.`interface`.IFragment
 import com.example.fragmentexample.data.CarItem
 import com.example.fragmentexample.databinding.ActivityMainBinding
@@ -17,7 +16,6 @@ import com.example.fragmentexample.fragments.FragmentEdit
 import com.example.fragmentexample.fragments.FragmentList
 import com.example.fragmentexample.helpers.InitHelper.initDevicesList
 import com.example.fragmentexample.viewmodel.CarViewModel
-import java.io.FileNotFoundException
 
 class MainActivity : AppCompatActivity(), IFragment {
     private val ADD_CAR_CODE = 1
@@ -32,8 +30,10 @@ class MainActivity : AppCompatActivity(), IFragment {
     private val phonesListViewModel: CarViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         fFragmentList = FragmentList(this)
         fFragmentEdit = FragmentEdit(this)
@@ -41,13 +41,12 @@ class MainActivity : AppCompatActivity(), IFragment {
 
         carsList = initDevicesList(this)
 
+        
 
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
 
         phonesListViewModel.loadPhones(initDevicesList(this))
 
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.mList -> setCurrentFragment(fFragmentList)
                 R.id.mEdit -> setCurrentFragment(fFragmentEdit)
@@ -72,7 +71,7 @@ class MainActivity : AppCompatActivity(), IFragment {
 
     override fun creteCar() {
         binding.bottomNavigationView.selectedItemId = R.id.mAdd
-//        setCurrentFragment(fFragmentAdd)
+        setCurrentFragment(fFragmentAdd)
     }
 
     override fun updateCar(index: Int) {
@@ -90,23 +89,9 @@ class MainActivity : AppCompatActivity(), IFragment {
         TODO("Not yet implemented")
     }
 
-//    private fun uriToDrawable(imageUri: String): Drawable {
-//        var image = AppCompatResources.getDrawable(this, R.drawable.phone)!!
-//        try {
-//            val inputStream = contentResolver.openInputStream(Uri.parse(imageUri))
-//            image = Drawable.createFromStream(inputStream, imageUri)
-//        } catch (e: FileNotFoundException) {
-//            Log.e("MainActivity", "Unable to parse image from URI: $imageUri")
-//        }
-//        return image
-//    }
 
-//    override fun onClick(view: View) {
-//        val action =
-//            FragmentListDirections
-//                .actionFragmentListToFragmentAdd2()
-//        view.findNavController().navigate(action)
-//    }
+
+
 
 
 }
